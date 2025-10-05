@@ -1,0 +1,238 @@
+syntax = "proto3";
+
+package com.cps2004;
+
+message Transport {
+  oneof transport_type {
+    Ship ship = 1;
+    Plane plane = 2;
+    Truck truck = 3;
+  }
+  int32 transportSpeed = 4;
+  int32 costPerKm = 5;
+  int32 transportID = 6;
+}
+
+message Ship {
+  Transport transport = 1;
+  repeated string harbours = 2;
+}
+
+message Plane {
+  Transport transport = 1;
+  repeated string airSpaces = 2;
+}
+
+message Truck {
+  Transport transport = 1;
+  repeated string roads = 2;
+}
+
+message Supplier {
+  string name = 1;
+  int32 supplierID = 2;
+}
+
+message Package {
+  int32 packagingUnits = 1;
+  double cost = 2;
+  string type = 3;
+  int32 packageID = 4;
+}
+
+message Product {
+  oneof product_type {
+    Book book = 1;
+    Electronics electronics = 2;
+    Food food = 3;
+    Clothes clothes = 4;
+    Furniture furniture = 5;
+    VideoGame videoGame = 6;
+  }
+  string name = 7;
+  int32 productID = 8;
+  int32 price = 9;
+  int32 quantity = 10;
+  Supplier supplier = 11;
+  int32 volume = 12;
+}
+
+message Book  {
+  oneof book_type {
+    FictionBook fictionBook = 1;
+    Textbook textbook = 2;
+  }
+  Product product = 3;
+  string publisher = 4;
+  int32 pages = 5;
+  string author = 6;
+}
+
+message FictionBook {
+  Book book = 1;
+  string genre = 2;
+  string publicationDate = 3;
+}
+
+message Textbook {
+  Book book = 1;
+  string subject = 2;
+  int32 edition = 3;
+}
+
+message Electronics {
+  oneof electronics_type {
+    Camera camera = 1;
+    Laptop laptop = 2;
+  }
+  Product product = 3;
+  string manufacturer = 4;
+  int32 warranty = 5;
+}
+
+message Camera {
+  Electronics electronics = 1;
+  double megaPixels = 2;
+  int32 zoom = 3;
+  bool wirelessConnectivity = 4;
+}
+
+message Laptop {
+  Electronics electronics = 1;
+  double screenSize = 2;
+  string operatingSystem = 3;
+  int32 ram = 4;
+}
+
+message Food {
+  oneof food_type {
+    Fruit fruit = 1;
+    PremadeLunch premadeLunch = 2;
+  }
+  Product product = 3;
+  double weight = 4;
+  string expirationDate = 5;
+}
+
+message Fruit {
+  Food food = 1;
+  string countryOfOrigin = 2;
+  string type = 3;
+  bool organic = 4;
+}
+
+message PremadeLunch {
+  Food food = 1;
+  bool perishable = 2;
+  string ingredients = 3;
+  string allergens = 4;
+}
+
+message Clothes {
+  oneof clothes_type {
+    Pants pants = 1;
+    TShirt tShirt = 2;
+  }
+  Product product = 3;
+  string size = 4;
+  string brand = 5;
+  string material = 6;
+}
+
+message Pants {
+  Clothes clothes = 1;
+  double inseam = 2;
+  double waist = 3;
+}
+
+message TShirt {
+  Clothes clothes = 1;
+  string collar = 2;
+  bool graphics = 3;
+}
+
+message Furniture {
+  oneof furniture_type {
+    Table table = 1;
+    Chair chair = 2;
+  }
+  Product product = 3;
+  string material = 4;
+  string dimensions = 5;
+}
+
+message Table {
+  Furniture furniture = 1;
+  bool extendable = 2;
+  string shape = 3;
+  int32 noOfLegs = 4;
+}
+
+message Chair {
+  Furniture furniture = 1;
+  double seatLength = 2;
+  bool armRests = 3;
+}
+
+message VideoGame {
+  oneof videoGame_type {
+    Action action = 1;
+    RPG rpg = 2;
+  }
+  Product product = 3;
+  string platform = 4;
+  string developer = 5;
+}
+
+message Action {
+  VideoGame videoGame = 1;
+  int32 noOfPlayers = 2;
+  string rating = 3;
+}
+
+message RPG {
+  VideoGame videoGame = 1;
+  string story = 2;
+  bool multiplayer = 3;
+}
+
+message StockItem {
+  Product product = 1;
+  int32 quantity = 2;
+}
+
+message Stock {
+  repeated StockItem currentstock = 1;
+}
+
+message ShipmentItem {
+  int32 id = 1;
+  int32 quantity = 2;
+  Product product = 3;
+  Package package = 4;
+}
+
+message Shipment {
+  Transport transport = 1;
+  repeated ShipmentItem packagedItems = 2;
+  bool dispatched = 3;
+  double distance = 4;
+  string dispatchedDate = 5;
+  int32 shipmentID = 6;
+}
+
+message Customer {
+  string name = 1;
+  string address = 2;
+  int32 ID = 3;
+  double distanceFromWarehouse = 4;
+  repeated Shipment shipments = 5;
+}
+
+message State {
+  repeated Transport transports = 1;
+  repeated Supplier suppliers = 2;
+  repeated Customer customers = 3;
+  repeated Package packages = 4;
+  Stock stock = 5;
+}

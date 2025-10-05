@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package com.cps2004;
+
+import "data_structures.proto";
+
+service ShipmentService {
+  rpc CalculateTotalPrice(CalculateTotalPriceRequest) returns (CalculateTotalPriceResponse);
+}
+
+message CalculateTotalPriceRequest {
+  Shipment shipment = 1;
+
+}
+message CalculateTotalPriceResponse {
+  double totalPrice = 1;
+}
